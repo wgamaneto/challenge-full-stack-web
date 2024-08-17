@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import Students from "@/components/Students.vue";
+import Students from '@/components/Students.vue'
 
 export default {
-  name: "StudentsView",
+  name: 'StudentsView',
   components: {
-    StudentsData,
-  },
-};
+    Students
+  }
+}
 </script>

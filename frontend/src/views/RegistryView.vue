@@ -5,13 +5,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Registry from "@/components/Registry.vue";
+import Registry from '@/components/Registry.vue'
 
 export default {
-  name: "HomeView",
+  name: 'HomeView',
   components: {
-    CadastroStudents,
-  },
-};
+    Registry
+  }
+}
 </script>

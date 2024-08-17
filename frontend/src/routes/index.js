@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import StudentsView from "../views/StudentsView.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: StudentsView,
+    component: () => import("../views/StudentsView.vue"),
   },
   {
     path: "/cadastrar",
@@ -13,9 +12,10 @@ const routes = [
     component: () => import("../views/RegistryView.vue"),
   },
   {
-    path: "/update",
+    path: "/update/:id",
     name: "studentsUpdate",
     component: () => import("../views/UpdateView.vue"),
+    props: true,
   },
 ];
 

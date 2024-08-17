@@ -2,12 +2,12 @@
   <div class="container">
     <div class="txt-search">
       <label for="search">
-        <input type="text" v-model="txtSearch" />
+        <input type="text" v-model="txtSearch" placeholder="Digite sua busca" />
       </label>
-      <button @click="serachStudent" class="search">Pesquisar</button>
+      <button @click="searchStudent" class="search">Pesquisar</button>
     </div>
 
-    <div v-if="listStudents.length > 0">
+    <div v-if="filteredStudents.length > 0">
       <table class="consulta">
         <tr class="">
           <td>Registro acadêmico</td>
@@ -16,8 +16,7 @@
           <td>E-mail</td>
           <td>Ações</td>
         </tr>
-        <!-- Dinamico nessa parte -->
-        <tr v-for="student in listStudents" :key="student.id">
+        <tr v-for="student in filteredStudents" :key="student.id">
           <td class="td-bottom">{{ student.ra }}</td>
           <td class="td-bottom">{{ student.name }}</td>
           <td class="td-bottom">{{ student.cpf }}</td>
@@ -36,13 +35,14 @@
 </template>
 
 <script>
-import api from "@/RequestApi/api";
+import api from "../services/api";
 
 export default {
   name: "StudentsData",
   data() {
     return {
       listStudents: [],
+      filteredStudents: [],
       txtSearch: "",
       update: false,
     };
@@ -52,28 +52,36 @@ export default {
   },
   methods: {
     requestApi() {
-      api.get("/").then((response) => {
-        this.listStudents = response.data;
-      });
+      api
+        .get("/students")
+        .then((response) => {
+          this.listStudents = response.data;
+          this.filteredStudents = response.data;
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar alunos:", error);
+        });
     },
 
-    serachStudent() {
-      if (!this.txtSearch !== "") {
-        const filtro = [...this.listStudents].filter((student) =>
+    searchStudent() {
+      if (this.txtSearch.trim() !== "") {
+        this.filteredStudents = this.listStudents.filter((student) =>
           student.name.toLowerCase().includes(this.txtSearch.toLowerCase())
         );
-        this.listStudents = filtro;
-        this.txtSearch = "";
       } else {
-        api.get("/").then((response) => {
-          this.listStudents = response.data;
-        });
+        this.filteredStudents = this.listStudents;
       }
     },
 
     deleteStudent(student) {
-      api.delete(`/ ${student.id}`);
-      this.requestApi();
+      api
+        .delete(`/students/${student.id}`)
+        .then(() => {
+          this.requestApi();
+        })
+        .catch((error) => {
+          console.error("Erro ao deletar aluno:", error);
+        });
     },
   },
 };

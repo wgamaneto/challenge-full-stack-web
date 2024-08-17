@@ -35,47 +35,45 @@
 </template>
 
 <script>
-import api from "@/Request/api";
+import api from '@/services/api'
 
 export default {
-  name: "StudentsData",
-  data() {
+  name: 'StudentsData',
+  data () {
     return {
       listStudents: [],
-      txtSearch: "",
-      update: false,
-    };
+      txtSearch: '',
+      update: false
+    }
   },
-  mounted() {
-    this.requestApi();
+  mounted () {
+    this.requestApi()
   },
   methods: {
-    requestApi() {
-      api.get("/").then((response) => {
-        this.listStudents = response.data;
-      });
+    requestApi () {
+      api.get('/').then((response) => {
+        this.listStudents = response.data
+      })
     },
 
-    serachStudent() {
-      if (!this.txtSearch !== "") {
-        const filtro = [...this.listStudents].filter((student) =>
-          student.name.toLowerCase().includes(this.txtSearch.toLowerCase())
-        );
-        this.listStudents = filtro;
-        this.txtSearch = "";
+    serachStudent () {
+      if (!this.txtSearch !== '') {
+        const filtro = [...this.listStudents].filter((student) => student.name.toLowerCase().includes(this.txtSearch.toLowerCase()))
+        this.listStudents = filtro
+        this.txtSearch = ''
       } else {
-        api.get("/").then((response) => {
-          this.listStudents = response.data;
-        });
+        api.get('/').then((response) => {
+          this.listStudents = response.data
+        })
       }
     },
 
-    deleteStudent(student) {
-      api.delete(`/ ${student.id}`);
-      this.requestApi();
-    },
-  },
-};
+    deleteStudent (student) {
+      api.delete(`/ ${student.id}`)
+      this.requestApi()
+    }
+  }
+}
 </script>
 
 <style scoped>

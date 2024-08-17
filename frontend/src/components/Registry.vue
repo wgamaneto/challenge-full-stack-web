@@ -45,71 +45,71 @@
 </template>
 
 <script>
-import api from "@/RequestApi/api";
-import VueRouter from "vue-router";
+import VueRouter from 'vue-router'
+import api from '../services/api'
 
 export default {
-  name: "CadastroStudents",
-  data() {
+  name: 'CadastroStudents',
+  data () {
     return {
-      ra: "",
-      nome: "",
-      cpf: "",
-      email: "",
+      ra: '',
+      nome: '',
+      cpf: '',
+      email: '',
       valid: false,
       disabled: true,
       error: false,
-      save: false,
-    };
+      save: false
+    }
   },
   methods: {
-    validationRa(ra) {
-      return !Number.isNaN(Number(ra));
+    validationRa (ra) {
+      return !Number.isNaN(Number(ra))
     },
 
-    isValidEmail(email) {
-      this.validationRa(this.ra);
-      const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-      return regex.test(email);
+    isValidEmail (email) {
+      this.validationRa(this.ra)
+      const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
+      return regex.test(email)
     },
 
-    isSave() {
-      this.save = false;
+    isSave () {
+      this.save = false
     },
 
-    redirect() {
-      VueRouter.push({ name: "/" });
+    redirect () {
+      VueRouter.push({ name: '/' })
     },
 
-    enviarForm(e) {
-      e.preventDefault();
+    enviarForm (e) {
+      e.preventDefault()
       if (!this.nome || !this.cpf || !this.ra || !this.email) {
-        this.error = true;
+        this.error = true
       }
 
       if (this.validationRa() && this.cpf.length !== 11) {
-        this.error = true;
+        this.error = true
       } else {
-        this.error = false;
+        this.error = false
       }
 
       if (!this.error) {
-        api.post("/", {
+        api.post('/', {
           ra: this.ra,
           name: this.nome,
           cpf: this.cpf,
-          email: this.email,
-        });
-        this.save = true;
-        this.ra = "";
-        this.nome = "";
-        this.cpf = "";
-        this.email = "";
-        setTimeout(this.isSave, 2000);
+          email: this.email
+        })
+        this.save = true
+        this.ra = ''
+        this.nome = ''
+        this.cpf = ''
+        this.email = ''
+        setTimeout(this.isSave, 2000)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

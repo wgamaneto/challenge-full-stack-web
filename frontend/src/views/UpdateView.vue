@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import Updates from "@/components/Updates.vue";
+import Updates from '@/components/Updates.vue'
 
 export default {
-  name: "UpdateView",
+  name: 'UpdateView',
   components: {
-    UpdateStudent,
-  },
-};
+    Updates
+  }
+}
 </script>

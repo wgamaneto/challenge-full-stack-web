@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     requestApi () {
-      api.get('/').then((response) => {
+      api.get('/students').then((response) => {
         this.listStudents = response.data
       })
     },

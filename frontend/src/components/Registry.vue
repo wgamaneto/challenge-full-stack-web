@@ -31,9 +31,7 @@
       </div>
 
       <div class="">
-        <button type="button">
-          <a href="/">Cancelar</a>
-        </button>
+        <button type="button" @click="redirect">Cancelar</button>
         <button type="submit">Salvar</button>
         <div class="save-div" v-if="save">
           <p class="save">Estudante salvo com sucesso!</p>
@@ -45,7 +43,7 @@
 </template>
 
 <script>
-import VueRouter from 'vue-router'
+import { useRouter } from 'vue-router'
 import api from '../services/api'
 
 export default {
@@ -56,19 +54,20 @@ export default {
       nome: '',
       cpf: '',
       email: '',
-      valid: false,
-      disabled: true,
       error: false,
       save: false
     }
   },
+  setup () {
+    const router = useRouter()
+    return { router }
+  },
   methods: {
     validationRa (ra) {
-      return !Number.isNaN(Number(ra))
+      return !Number.isNaN(Number(ra)) && ra.length > 0
     },
 
     isValidEmail (email) {
-      this.validationRa(this.ra)
       const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
       return regex.test(email)
     },
@@ -78,35 +77,45 @@ export default {
     },
 
     redirect () {
-      VueRouter.push({ name: '/' })
+      this.$router.push('/')
     },
 
     enviarForm (e) {
       e.preventDefault()
       if (!this.nome || !this.cpf || !this.ra || !this.email) {
         this.error = true
+        return
       }
 
-      if (this.validationRa() && this.cpf.length !== 11) {
+      if (!this.validationRa(this.ra) || this.cpf.length !== 11 || !this.isValidEmail(this.email)) {
         this.error = true
-      } else {
-        this.error = false
+        return
       }
 
-      if (!this.error) {
-        api.post('/', {
+      this.error = false
+
+      api
+        .post('/students', {
           ra: this.ra,
           name: this.nome,
           cpf: this.cpf,
           email: this.email
         })
-        this.save = true
-        this.ra = ''
-        this.nome = ''
-        this.cpf = ''
-        this.email = ''
-        setTimeout(this.isSave, 2000)
-      }
+        .then(() => {
+          this.save = true
+          this.ra = ''
+          this.nome = ''
+          this.cpf = ''
+          this.email = ''
+          setTimeout(() => {
+            this.isSave()
+            this.redirect()
+          }, 2000)
+        })
+        .catch((error) => {
+          console.error('Erro ao salvar estudante:', error)
+          this.error = true
+        })
     }
   }
 }

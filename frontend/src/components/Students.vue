@@ -35,56 +35,54 @@
 </template>
 
 <script>
-import api from "../services/api";
+import api from '../services/api'
 
 export default {
-  name: "StudentsData",
-  data() {
+  name: 'StudentsData',
+  data () {
     return {
       listStudents: [],
       filteredStudents: [],
-      txtSearch: "",
-      update: false,
-    };
+      txtSearch: '',
+      update: false
+    }
   },
-  mounted() {
-    this.requestApi();
+  mounted () {
+    this.requestApi()
   },
   methods: {
-    requestApi() {
+    requestApi () {
       api
-        .get("/students")
+        .get('/students')
         .then((response) => {
-          this.listStudents = response.data;
-          this.filteredStudents = response.data;
+          this.listStudents = response.data
+          this.filteredStudents = response.data
         })
         .catch((error) => {
-          console.error("Erro ao buscar alunos:", error);
-        });
+          console.error('Erro ao buscar alunos:', error)
+        })
     },
 
-    searchStudent() {
-      if (this.txtSearch.trim() !== "") {
-        this.filteredStudents = this.listStudents.filter((student) =>
-          student.name.toLowerCase().includes(this.txtSearch.toLowerCase())
-        );
+    searchStudent () {
+      if (this.txtSearch.trim() !== '') {
+        this.filteredStudents = this.listStudents.filter((student) => student.name.toLowerCase().includes(this.txtSearch.toLowerCase()))
       } else {
-        this.filteredStudents = this.listStudents;
+        this.filteredStudents = this.listStudents
       }
     },
 
-    deleteStudent(student) {
+    deleteStudent (student) {
       api
         .delete(`/students/${student.id}`)
         .then(() => {
-          this.requestApi();
+          this.requestApi()
         })
         .catch((error) => {
-          console.error("Erro ao deletar aluno:", error);
-        });
-    },
-  },
-};
+          console.error('Erro ao deletar aluno:', error)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
     </div>
     <div class="nav-links">
       <router-link to="/" class="nav-link">Lista dos estudantes</router-link>
-      <router-link to="/register">
+      <router-link to="/cadastrar">
         <button type="button" class="nav-button">Registrar</button>
       </router-link>
     </div>

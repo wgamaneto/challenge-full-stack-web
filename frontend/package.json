@@ -20,12 +20,16 @@
     "@babel/eslint-parser": "^7.12.16",
     "@babel/plugin-proposal-do-expressions": "^7.18.6",
     "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
+    "@vue/eslint-config-standard": "^6.1.0",
     "deepmerge": "^4.2.2",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.1.0",
     "sass": "~1.32",
@@ -39,7 +43,8 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "@vue/airbnb"
+      "@vue/airbnb",
+      "@vue/standard"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"

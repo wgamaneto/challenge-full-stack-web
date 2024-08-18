@@ -1,13 +1,10 @@
 <template>
   <div class="navbar">
     <div class="logo">
-      <h1>Informacao dos estudantes</h1>
+      <img src="./assets/logo.png" alt="Grupo A" class="logo-image" />
     </div>
     <div class="nav-links">
-      <router-link to="/" class="nav-link">Lista dos estudantes</router-link>
-      <router-link to="/cadastrar">
-        <button type="button" class="nav-button">Registrar</button>
-      </router-link>
+      <router-link to="/" class="nav-link">Alunos</router-link>
     </div>
   </div>
   <router-view />
@@ -18,15 +15,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #282c34;
-  color: #ffffff;
+  padding: 15px 20px;
+  background-color: #ddd;
+  color: #333;
+  border-bottom: 2px solid #c0c0c0;
 }
 
-.logo h1 {
-  margin: 0;
-  font-size: 1.5em;
-  color: #61dafb;
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  max-height: 40px;
 }
 
 .nav-links {
@@ -36,18 +37,21 @@
 
 .nav-link {
   text-decoration: none;
-  color: #ffffff;
+  color: #333;
   font-weight: bold;
-  font-size: 1em;
-  transition: color 0.3s;
+  font-size: 1.2em;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-link:hover {
-  color: #61dafb;
+  background-color: #c0c0c0;
+  color: #000;
 }
 
 .nav-button {
-  background-color: #61dafb;
+  background-color: #b0b0b0;
   border: none;
   border-radius: 4px;
   color: #ffffff;
@@ -58,6 +62,6 @@
 }
 
 .nav-button:hover {
-  background-color: #21a1f1;
+  background-color: #a0a0a0;
 }
 </style>

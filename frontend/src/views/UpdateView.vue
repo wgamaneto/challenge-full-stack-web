@@ -38,47 +38,47 @@
 </template>
 
 <script>
-import api from "@/services/api";
+import api from '@/services/api'
 
 export default {
-  name: "UpdateView",
-  props: ["id"],
-  data() {
+  name: 'UpdateView',
+  props: ['id'],
+  data () {
     return {
       student: {
-        ra: "",
-        name: "",
-        cpf: "",
-        email: "",
+        ra: '',
+        name: '',
+        cpf: '',
+        email: ''
       },
       error: false,
-      success: false,
-    };
+      success: false
+    }
   },
-  mounted() {
-    this.loadStudent();
+  mounted () {
+    this.loadStudent()
   },
   methods: {
-    async loadStudent() {
+    async loadStudent () {
       try {
-        const response = await api.get(`/students/${this.id}`);
-        this.student = response.data;
+        const response = await api.get(`/students/${this.id}`)
+        this.student = response.data
       } catch (error) {
-        console.error("Erro ao carregar dados do aluno", error);
+        console.error('Erro ao carregar dados do aluno', error)
       }
     },
-    async updateStudent() {
+    async updateStudent () {
       try {
-        await api.put(`/students/${this.id}`, this.student);
-        this.success = true;
-        setTimeout(() => (this.success = false), 2000);
+        await api.put(`/students/${this.id}`, this.student)
+        this.success = true
+        setTimeout(() => (this.success = false), 2000)
       } catch (error) {
-        this.error = true;
-        console.error("Erro ao atualizar aluno", error);
+        this.error = true
+        console.error('Erro ao atualizar aluno', error)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

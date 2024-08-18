@@ -1,50 +1,84 @@
 <template>
   <div class="container">
-    <div class="form-group">
-      <label for="name">Nome</label>
-      <input type="text" v-model="student.name" placeholder="Informe o nome completo" />
-    </div>
+    <h2>{{ isEdit ? "Editar Aluno" : "Cadastrar Aluno" }}</h2>
+    <form @submit.prevent="saveStudent">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input id="name" type="text" v-model="student.name" placeholder="Informe o nome completo" />
+      </div>
 
-    <div class="form-group">
-      <label>E-mail</label>
-      <input type="email" v-model="student.email" placeholder="Informe apenas um e-mail" />
-    </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          v-model="student.email"
+          placeholder="Informe apenas um e-mail"
+        />
+      </div>
 
-    <div class="form-group">
-      <label>RA</label>
-      <input type="text" v-model="student.ra" placeholder="Informe o registro acadêmico" />
-    </div>
+      <div class="form-group">
+        <label for="ra">Registro Acadêmico</label>
+        <input
+          id="ra"
+          type="text"
+          v-model="student.ra"
+          placeholder="Informe o registro academico"
+        />
+      </div>
 
-    <div class="form-group">
-      <label>CPF</label>
-      <input type="text" v-model="student.cpf" placeholder="Informe o número do documento" />
-    </div>
+      <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input
+          id="cpf"
+          type="text"
+          v-model="student.cpf"
+          placeholder="Informe o numero do documento"
+        />
+      </div>
 
-    <div class="form-actions">
-      <button @click="cancel" class="cancel">Cancelar</button>
-      <button @click="saveStudent" class="save">Salvar</button>
-    </div>
+      <button type="submit" class="save-button">Salvar</button>
+      <button type="button" @click="cancelEdit" class="cancel-button">Cancelar</button>
+    </form>
   </div>
 </template>
 
 <script>
+import api from '@/services/api'
+
 export default {
+  name: 'Registry',
   data () {
     return {
       student: {
-        name: '',
-        email: '',
         ra: '',
-        cpf: ''
-      }
+        name: '',
+        cpf: '',
+        email: ''
+      },
+      isEdit: false
+    }
+  },
+  mounted () {
+    const { student } = this.$route.params
+    if (student) {
+      this.student = student
+      this.isEdit = true
     }
   },
   methods: {
     saveStudent () {
-      // lógica para salvar o estudante
+      api
+        .post('/students', this.student)
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          console.error('Erro ao cadastrar aluno:', error)
+        })
     },
-    cancel () {
-      // lógica para cancelar
+    cancelEdit () {
+      this.$router.push('/')
     }
   }
 }
@@ -52,52 +86,49 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 700px;
+  max-width: 600px;
   margin: auto;
-  margin-top: 30px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
   padding: 20px;
   background-color: white;
   border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 15px;
 }
 
-.form-group label {
+label {
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.form-group input {
-  height: 35px;
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  padding-left: 10px;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.cancel,
-.save {
-  background-color: #b0b0b0;
-  border: 1px solid #b0b0b0;
+.save-button,
+.cancel-button {
+  padding: 10px 20px;
+  border: none;
   border-radius: 4px;
-  color: white;
-  padding: 8px 16px;
   cursor: pointer;
   font-weight: bold;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.save {
-  background-color: #c0c0c0;
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
 }
 </style>

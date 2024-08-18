@@ -26,7 +26,7 @@
             <td class="td-bottom">{{ student.name }}</td>
             <td class="td-bottom">{{ student.cpf }}</td>
             <td class="td-bottom">
-              <button type="button" class="edit" @click="editStudent(student.id)">[Editar]</button>
+              <button type="button" class="edit" @click="editStudent(student)">[Editar]</button>
               <button type="button" @click="deleteStudent(student)" class="delete">
                 [Excluir]
               </button>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import api from '../services/api'
+import api from '@/services/api'
 
 export default {
   name: 'StudentsData',
@@ -68,6 +68,7 @@ export default {
           console.error('Erro ao buscar alunos:', error)
         })
     },
+    /* eslint-disable max-len */
     searchStudent () {
       if (this.txtSearch.trim() !== '') {
         this.filteredStudents = this.listStudents.filter((student) => student.name.toLowerCase().includes(this.txtSearch.toLowerCase()))
@@ -85,6 +86,13 @@ export default {
         .catch((error) => {
           console.error('Erro ao deletar aluno:', error)
         })
+    },
+
+    editStudent (student) {
+      this.$router.push({
+        name: 'UpdateView',
+        params: { id: student.id }
+      })
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div class="logo">
-      <img src="./assets/logo.png" alt="Grupo A" class="logo-image" />
+      <img src="@/assets/logo.png" alt="Grupo A" class="logo-image" />
     </div>
     <div class="nav-links">
       <router-link to="/" class="nav-link">Alunos</router-link>

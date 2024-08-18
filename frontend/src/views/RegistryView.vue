@@ -8,7 +8,7 @@
 import Registry from '@/components/Registry.vue'
 
 export default {
-  name: 'HomeView',
+  name: 'RegistryView',
   components: {
     Registry
   }

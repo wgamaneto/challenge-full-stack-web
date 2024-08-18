@@ -1,42 +1,38 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <input type="text" v-model="txtSearch" placeholder="Digite sua busca" class="search-input" />
-      <button @click="serachStudent" class="search-button">Pesquisar</button>
-      <router-link to="/cadastrar">
-        <button type="button" class="register-button">Cadastrar Aluno</button>
-      </router-link>
+  <div class="update-container">
+    <h1>Editar Aluno</h1>
+    <form @submit.prevent="updateStudent">
+      <div class="input">
+        <label for="name">
+          Nome:
+          <input type="text" v-model="student.name" id="name" />
+        </label>
+      </div>
+      <div class="input">
+        <label for="email">
+          E-mail:
+          <input type="email" v-model="student.email" id="email" />
+        </label>
+      </div>
+      <div class="input">
+        <label for="ra">
+          Registro Acadêmico:
+          <input type="text" v-model="student.ra" id="ra" disabled />
+        </label>
+      </div>
+      <div class="input">
+        <label for="cpf">
+          CPF:
+          <input type="text" v-model="student.cpf" id="cpf" disabled />
+        </label>
+      </div>
+      <button type="submit">Salvar</button>
+    </form>
+    <div v-if="error" class="error">
+      <p>Erro ao atualizar aluno. Tente novamente.</p>
     </div>
-
-    <div v-if="listStudents.length > 0" class="table-container">
-      <table class="consulta">
-        <thead>
-          <tr>
-            <th>Registro Acadêmico</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>E-mail</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="student in listStudents" :key="student.id">
-            <td>{{ student.ra }}</td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.cpf }}</td>
-            <td>{{ student.email }}</td>
-            <td class="actions">
-              <button type="button" class="edit-button" @click="to = '/cadastrar'">Editar</button>
-              <button type="button" @click="deleteStudent(student)" class="delete-button">
-                Excluir
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div v-else class="consulta">
-      <p>Sem dados de alunos</p>
+    <div v-if="success" class="success">
+      <p>Aluno atualizado com sucesso!</p>
     </div>
   </div>
 </template>
@@ -45,123 +41,103 @@
 import api from '@/services/api'
 
 export default {
-  name: 'StudentsData',
+  name: 'UpdateView',
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data () {
     return {
-      listStudents: [],
-      txtSearch: '',
-      update: false
+      student: {
+        ra: '',
+        name: '',
+        cpf: '',
+        email: ''
+      },
+      error: false,
+      success: false
     }
   },
   mounted () {
-    this.requestApi()
+    this.loadStudent()
   },
   methods: {
-    requestApi () {
-      api.get('/students').then((response) => {
-        this.listStudents = response.data
-      })
+    // Carregar os dados do aluno ao montar o componente
+    loadStudent () {
+      api
+        .get(`/students/${this.id}`)
+        .then((response) => {
+          this.student = response.data
+        })
+        .catch((error) => {
+          this.error = true
+          console.error('Erro ao carregar dados do aluno:', error)
+        })
     },
 
-    serachStudent () {
-      if (this.txtSearch.trim() !== '') {
-        this.listStudents = this.listStudents.filter((student) => student.name.toLowerCase().includes(this.txtSearch.toLowerCase()))
-      } else {
-        this.requestApi()
-      }
-    },
-
-    deleteStudent (student) {
-      api.delete(`/students/${student.id}`).then(() => {
-        this.requestApi()
-      })
+    // Atualizar os dados do aluno
+    updateStudent () {
+      api
+        .put(`/students/${this.id}`, this.student)
+        .then(() => {
+          this.success = true
+          setTimeout(() => (this.success = false), 2000)
+        })
+        .catch((error) => {
+          this.error = true
+          console.error('Erro ao atualizar aluno:', error)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
-.container {
-  max-width: 1000px;
-  margin: 30px auto;
+.update-container {
+  max-width: 600px;
+  margin: auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.input {
+  margin-bottom: 15px;
 }
 
-.search-input {
-  width: 300px;
-  padding: 10px;
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
 }
 
-.search-button,
-.register-button {
-  background-color: #a0a0a0;
+button {
+  background-color: #28a745;
+  color: white;
   border: none;
-  border-radius: 4px;
-  color: #ffffff;
   padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
 }
 
-.search-button:hover,
-.register-button:hover {
-  background-color: #888888;
+button:hover {
+  background-color: #218838;
 }
 
-.table-container {
+.error {
+  color: red;
   margin-top: 20px;
 }
 
-.consulta {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  background-color: #fff;
-}
-
-.consulta th,
-.consulta td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-}
-
-.consulta th {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.edit-button,
-.delete-button {
-  border: none;
-  background: none;
-  color: #007bff;
-  cursor: pointer;
-  text-decoration: underline;
-  font-size: 0.9em;
-  padding: 0;
-}
-
-.edit-button:hover,
-.delete-button:hover {
-  color: #0056b3;
+.success {
+  color: green;
+  margin-top: 20px;
 }
 </style>

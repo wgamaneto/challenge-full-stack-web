@@ -13,9 +13,8 @@ const routes = [
   },
   {
     path: '/update/:id',
-    name: 'studentsUpdate',
-    component: () => import('../views/UpdateView.vue'),
-    props: true
+    name: 'UpdateView',
+    component: () => import('../views/UpdateView.vue')
   }
 ]
 
@@ -25,3 +24,4 @@ const router = createRouter({
 })
 
 export default router
+6

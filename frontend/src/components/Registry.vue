@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>{{ isEdit ? "Editar Aluno" : "Cadastrar Aluno" }}</h2>
+    <h2 class="header">Cadastrar Aluno</h2>
     <form @submit.prevent="saveStudent">
       <div class="form-group">
         <label for="name">Nome</label>
@@ -55,15 +55,13 @@ export default {
         name: '',
         cpf: '',
         email: ''
-      },
-      isEdit: false
+      }
     }
   },
   mounted () {
     const { student } = this.$route.params
     if (student) {
       this.student = student
-      this.isEdit = true
     }
   },
   methods: {
@@ -86,13 +84,28 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 600px;
+  max-width: 900px;
   margin: auto;
   margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 20px;
+  border-width: 2px;
+  height: 80px;
+  border-color: black;
 }
 
 .form-group {
@@ -123,12 +136,12 @@ input {
 }
 
 .save-button {
-  background-color: #28a745;
-  color: white;
+  background-color: #d3d3d3;
+  color: black;
 }
 
 .cancel-button {
-  background-color: #dc3545;
+  background-color: #666;
   color: white;
 }
 </style>

@@ -1,29 +1,37 @@
 <template>
-  <div class="navbar">
-    <div class="logo">
-      <img src="@/assets/logo.png" alt="Grupo A" class="logo-image" />
-    </div>
-    <div class="nav-links">
-      <router-link to="/" class="nav-link">Alunos</router-link>
-    </div>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="@/assets/logo.png" alt="Grupo A" class="logo-image" />
+      </div>
+      <nav class="nav-links">
+        <router-link to="/" class="nav-link">Alunos</router-link>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <router-view />
+    </main>
   </div>
-  <router-view />
 </template>
 
 <style scoped>
-.navbar {
+.app-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
   background-color: #ddd;
-  color: #333;
-  border-bottom: 2px solid #c0c0c0;
+  border-right: 2px solid #c0c0c0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+  margin-bottom: 20px;
 }
 
 .logo-image {
@@ -32,7 +40,8 @@
 
 .nav-links {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  width: 100%;
 }
 
 .nav-link {
@@ -40,14 +49,40 @@
   color: #333;
   font-weight: bold;
   font-size: 1.2em;
-  padding: 10px 15px;
+  padding: 10px;
+  text-align: center;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
+  margin-bottom: 10px;
 }
 
 .nav-link:hover {
   background-color: #c0c0c0;
   color: #000;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f7f7f7;
+  border-bottom: 2px solid #c0c0c0;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .nav-button {
@@ -59,6 +94,7 @@
   padding: 8px 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 10px;
 }
 
 .nav-button:hover {

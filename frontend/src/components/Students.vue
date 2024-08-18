@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2 class="header">Consulta de alunos</h2>
     <div class="txt-search">
       <label for="search">
         <input type="text" v-model="txtSearch" placeholder="Digite sua busca" />
@@ -26,10 +27,8 @@
             <td class="td-bottom">{{ student.name }}</td>
             <td class="td-bottom">{{ student.cpf }}</td>
             <td class="td-bottom">
-              <button type="button" class="edit" @click="editStudent(student)">[Editar]</button>
-              <button type="button" @click="deleteStudent(student)" class="delete">
-                [Excluir]
-              </button>
+              <button type="button" class="edit" @click="editStudent(student)">Editar</button>
+              <button type="button" @click="deleteStudent(student)" class="delete">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -107,42 +106,69 @@ export default {
   padding: 20px;
   background-color: white;
   border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 20px;
+  border-width: 2px;
+  height: 80px;
+  border-color: black;
 }
 
 .txt-search {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
   padding-bottom: 15px;
+  gap: 5px;
 }
 
 .txt-search input {
-  width: 60%;
-  height: 35px;
+  width: 420px;
+  height: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding-left: 10px;
 }
 
-.search,
-.register-button {
-  background-color: #b0b0b0;
-  border: 1px solid #b0b0b0;
+.search {
+  background-color: #d3d3d3;
+  border: 1px solid #d3d3d3;
   border-radius: 4px;
-  color: white;
+  color: black;
   padding: 8px 16px;
   cursor: pointer;
   font-weight: bold;
   margin-left: 10px;
 }
 
+.search:hover,
+.register-button:hover {
+  color: #666;
+}
+
 .register-button {
-  background-color: #c0c0c0;
+  background-color: #a9a9a9;
+  border: 1px solid #a9a9a9;
+  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .consulta table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #666;
 }
 
 .consulta th,
@@ -164,9 +190,12 @@ export default {
   cursor: pointer;
 }
 
-.edit:hover,
-.delete:hover {
+.edit:hover {
   color: #000;
+}
+
+.delete:hover {
+  color: red;
 }
 
 th {

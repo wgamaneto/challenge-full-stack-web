@@ -1,6 +1,6 @@
 <template>
-  <div class="update-container">
-    <h1>Editar Aluno</h1>
+  <div class="container">
+    <h2 class="header">Editar Aluno</h2>
     <form @submit.prevent="updateStudent">
       <div class="input">
         <label for="name">
@@ -64,7 +64,6 @@ export default {
     this.loadStudent()
   },
   methods: {
-    // Carregar os dados do aluno ao montar o componente
     loadStudent () {
       api
         .get(`/students/${this.id}`)
@@ -77,7 +76,6 @@ export default {
         })
     },
 
-    // Atualizar os dados do aluno
     updateStudent () {
       api
         .put(`/students/${this.id}`, this.student)
@@ -95,15 +93,33 @@ export default {
 </script>
 
 <style scoped>
-.update-container {
-  max-width: 600px;
+.container {
+  max-width: 900px;
   margin: auto;
+  margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .input {
   margin-bottom: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 20px;
+  border-width: 2px;
+  height: 80px;
+  border-color: black;
 }
 
 label {

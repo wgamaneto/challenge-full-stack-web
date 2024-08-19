@@ -26,7 +26,8 @@
           <input type="text" v-model="student.cpf" id="cpf" disabled />
         </label>
       </div>
-      <button type="submit">Salvar</button>
+      <button type="submit" class="save-button">Salvar</button>
+      <button type="button" @click="cancelEdit" class="cancel-button">Cancelar</button>
     </form>
     <div v-if="error" class="error">
       <p>Erro ao atualizar aluno. Tente novamente.</p>
@@ -87,6 +88,9 @@ export default {
           this.error = true
           console.error('Erro ao atualizar aluno:', error)
         })
+    },
+    cancelEdit () {
+      this.$router.push('/')
     }
   }
 }
@@ -134,16 +138,28 @@ input {
   border: 1px solid #ccc;
 }
 
-button {
-  background-color: #d3d3d3;
-  color: black;
-  border: none;
+.save-button,
+.cancel-button {
   padding: 10px 20px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
-button:hover {
+.save-button {
+  background-color: #d3d3d3;
+  color: black;
+}
+
+.cancel-button {
+  background-color: #666;
+  color: white;
+}
+
+.save-button:hover,
+.cancel-button:hover {
   opacity: 0.6;
 }
 

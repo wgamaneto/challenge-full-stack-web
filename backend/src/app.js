@@ -1,12 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors"); // Importa o pacote cors
 const app = express();
 const studentRoutes = require("./routes/students");
 
-app.use(bodyParser.json());
-app.use("/api", studentRoutes);
+app.use(cors());
 
-const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
+
+app.use(studentRoutes);
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

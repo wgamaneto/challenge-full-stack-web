@@ -6,6 +6,8 @@
 - Nao consegui usar o Vuetify por diversos erros que nao consegui resolver antes de inciar o desafio (Usando MAC arm M1)
 - Erros de babel que em nenhum momento atrapalhou o desenvolvimento, entao pode ser bug da minha IDE ou do Mac.
   `No Babel config file detected`
+- Tive varios problemas de dependencias com erros, que nao entendi completamente como resolver, principalmente com @vue_tests3.0.
+- Me falta mais conhecimentos de testes de forma geral.
 
 # Decisão da arquitetura utilizada
 
@@ -29,5 +31,6 @@
 - Melhorias de logicas, codigos mais enxutos e mais componentizacoes para evitar repeticoes desnecessarias.
 - Melhorias de estilos e layout.
 - Resolver problemas de lint sem o uso de comentarios para desabilita-los.
+- Testes mais corretos e acertivos alem de testes no backend.
 
 # Quais requisitos obrigatórios que não foram entregues

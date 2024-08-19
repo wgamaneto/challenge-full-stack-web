@@ -135,8 +135,8 @@ input {
 }
 
 button {
-  background-color: #28a745;
-  color: white;
+  background-color: #d3d3d3;
+  color: black;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -144,7 +144,7 @@ button {
 }
 
 button:hover {
-  background-color: #218838;
+  opacity: 0.6;
 }
 
 .error {

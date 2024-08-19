@@ -28,7 +28,9 @@
             <td class="td-bottom">{{ student.cpf }}</td>
             <td class="td-bottom">
               <button type="button" class="edit" @click="editStudent(student)">Editar</button>
-              <button type="button" @click="deleteStudent(student)" class="delete">Excluir</button>
+              <button type="button" @click="openConfirmationModal(student)" class="delete">
+                Excluir
+              </button>
             </td>
           </tr>
         </tbody>
@@ -37,19 +39,26 @@
     <div v-else class="consulta">
       <p>Sem dados de alunos</p>
     </div>
+    <ConfirmationModal :show="isModalVisible" :onConfirm="confirmDelete" :onCancel="cancelDelete" />
   </div>
 </template>
 
 <script>
 import api from '@/services/api'
+import ConfirmationModal from '@/components/ConfirmationModal.vue'
 
 export default {
   name: 'StudentsData',
+  components: {
+    ConfirmationModal
+  },
   data () {
     return {
       listStudents: [],
       filteredStudents: [],
-      txtSearch: ''
+      txtSearch: '',
+      studentToDelete: null,
+      isModalVisible: false
     }
   },
   mounted () {
@@ -67,34 +76,48 @@ export default {
           console.error('Erro ao buscar alunos:', error)
         })
     },
-    /* eslint-disable max-len */
     searchStudent () {
-      if (this.txtSearch.trim() !== '') {
-        this.filteredStudents = this.listStudents.filter((student) => student.name.toLowerCase().includes(this.txtSearch.toLowerCase()))
+      /* eslint-disable */
+      if (this.txtSearch.trim() !== "") {
+        this.filteredStudents = this.listStudents.filter((student) =>
+          student.name.toLowerCase().includes(this.txtSearch.toLowerCase())
+        );
       } else {
-        this.filteredStudents = this.listStudents
+        this.filteredStudents = this.listStudents;
       }
     },
-
-    deleteStudent (student) {
-      api
-        .delete(`/students/${student.id}`)
-        .then(() => {
-          this.requestApi()
-        })
-        .catch((error) => {
-          console.error('Erro ao deletar aluno:', error)
-        })
+    openConfirmationModal(student) {
+      this.studentToDelete = student;
+      this.isModalVisible = true;
     },
-
-    editStudent (student) {
+    confirmDelete(student) {
+      if (this.studentToDelete) {
+        api
+          .delete(`/students/${this.studentToDelete.id}`)
+          .then(() => {
+            this.requestApi();
+            this.studentToDelete = student;
+            this.isModalVisible = false;
+          })
+          .catch((error) => {
+            console.error("Erro ao deletar aluno:", error);
+            this.isModalVisible = false;
+            this.studentToDelete = null;
+          });
+      }
+    },
+    cancelDelete() {
+      this.isModalVisible = false;
+      this.studentToDelete = null;
+    },
+    editStudent(student) {
       this.$router.push({
-        name: 'UpdateView',
-        params: { id: student.id }
-      })
-    }
-  }
-}
+        name: "UpdateView",
+        params: { id: student.id },
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>

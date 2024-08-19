@@ -1,3 +1,5 @@
+<!-- eslint-disable vuejs-accessibility/label-has-for -->
+
 <template>
   <div class="container">
     <h2 class="header">Cadastrar Aluno</h2>
@@ -23,7 +25,7 @@
           id="ra"
           type="text"
           v-model="student.ra"
-          placeholder="Informe o registro academico"
+          placeholder="Informe o registro acadêmico"
         />
       </div>
 
@@ -33,13 +35,14 @@
           id="cpf"
           type="text"
           v-model="student.cpf"
-          placeholder="Informe o numero do documento"
+          placeholder="Informe o número do documento"
         />
       </div>
 
       <button type="submit" class="save-button">Salvar</button>
       <button type="button" @click="cancelEdit" class="cancel-button">Cancelar</button>
     </form>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -55,7 +58,8 @@ export default {
         name: '',
         cpf: '',
         email: ''
-      }
+      },
+      errorMessage: ''
     }
   },
   mounted () {
@@ -65,7 +69,29 @@ export default {
     }
   },
   methods: {
+    validateRA (ra) {
+      return /^\d{6}$/.test(ra)
+    },
+    validateCPF (cpf) {
+      return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf)
+    },
     saveStudent () {
+      if (!this.student.name || !this.student.email || !this.student.ra || !this.student.cpf) {
+        this.errorMessage = 'Por favor, preencha todos os campos.'
+        return
+      }
+      if (!this.validateRA(this.student.ra)) {
+        this.errorMessage = 'O Registro Acadêmico deve conter exatamente 6 números.'
+        return
+      }
+
+      if (!this.validateCPF(this.student.cpf)) {
+        this.errorMessage = 'O CPF deve estar no formato 000.000.000-00.'
+        return
+      }
+
+      this.errorMessage = ''
+
       api
         .post('/students', this.student)
         .then(() => {
@@ -143,5 +169,16 @@ input {
 .cancel-button {
   background-color: #666;
   color: white;
+}
+
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.6;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>

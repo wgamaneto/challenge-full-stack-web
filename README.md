@@ -16,6 +16,9 @@
 
 # Backend(config)
 
+**⚠️ IMPORTANTE! ⚠️**
+Mudar arquivo `.env.example` para `.env`
+
 ## Config.js:
 
 ```

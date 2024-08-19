@@ -3,7 +3,7 @@
     <div class="modal-content">
       <h3>Confirmação de Exclusão</h3>
       <p>Você realmente deseja excluir este aluno?</p>
-      <button class="confirm" @click="confirmar">Confirmar</button>
+      <button class="confirm" @click="confirm">Confirmar</button>
       <button class="cancelar" @click="cancel">Cancelar</button>
     </div>
   </div>
@@ -11,7 +11,11 @@
 
 <script>
 export default {
-  props: ['show', 'onConfirm', 'onCancel'],
+  props: {
+    show: Boolean,
+    onConfirm: Function,
+    onCancel: Function
+  },
   methods: {
     confirm () {
       this.onConfirm()

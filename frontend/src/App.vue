@@ -2,7 +2,7 @@
   <div class="app-container">
     <aside class="sidebar">
       <div class="logo">
-        <img src="@/assets/logo.png" alt="Grupo A" class="logo-image" />
+        <img :src="require('@/assets/logo.png')" alt="Grupo A" class="logo-image" />
       </div>
       <nav class="nav-links">
         <router-link to="/" class="nav-link">Alunos</router-link>

@@ -4,8 +4,6 @@
 - Algumas repeticoes de codigos, principalmente em botoes e estilos. - 2 comentarios para ignorar erros do lint (/_ eslint-disable _/, eslint-disable vuejs-accessibility/label-has-for)
 - Com certeza alguns codigos e logicas poderiam ser melhor implementadas com mais paciencia.
 - Nao consegui usar o Vuetify por diversos erros que nao consegui resolver antes de inciar o desafio (Usando MAC arm M1)
-- Erros de babel que em nenhum momento atrapalhou o desenvolvimento, entao pode ser bug da minha IDE ou do Mac.
-  `No Babel config file detected`
 - Tive varios problemas de dependencias com erros, que nao entendi completamente como resolver, principalmente com @vue_tests3.0.
 - Me falta mais conhecimentos de testes de forma geral.
 

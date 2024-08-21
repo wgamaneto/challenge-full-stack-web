@@ -21,7 +21,6 @@
 - Melhorias nas lógicas, códigos mais concisos e maior componentização para evitar repetições desnecessárias, pricipalmente nos botoes e estilos.
 - Melhorias no UX/UI.
 - Testes mais assertivos e em ambas stacks.
-- Dois comentários para ignorar erros do lint (/_ eslint-disable _/, eslint-disable vuejs-accessibility/label-has-for)
 
 # Quais requisitos obrigatórios que não foram entregues
 

@@ -44,40 +44,39 @@
 </template>
 
 <script>
-import api from '@/services/api'
-import ConfirmationModal from '@/components/ConfirmationModal.vue'
+import api from "@/services/api";
+import ConfirmationModal from "@/components/ConfirmationModal.vue";
 
 export default {
-  name: 'StudentsData',
+  name: "StudentsData",
   components: {
-    ConfirmationModal
+    ConfirmationModal,
   },
-  data () {
+  data() {
     return {
       listStudents: [],
       filteredStudents: [],
-      txtSearch: '',
+      txtSearch: "",
       studentToDelete: null,
-      isModalVisible: false
-    }
+      isModalVisible: false,
+    };
   },
-  mounted () {
-    this.requestApi()
+  mounted() {
+    this.requestApi();
   },
   methods: {
-    requestApi () {
+    requestApi() {
       api
-        .get('/students')
+        .get("/students")
         .then((response) => {
-          this.listStudents = response.data
-          this.filteredStudents = response.data
+          this.listStudents = response.data;
+          this.filteredStudents = response.data;
         })
         .catch((error) => {
-          console.error('Erro ao buscar alunos:', error)
-        })
+          console.error("Erro ao buscar alunos:", error);
+        });
     },
-    searchStudent () {
-      /* eslint-disable */
+    searchStudent() {
       if (this.txtSearch.trim() !== "") {
         this.filteredStudents = this.listStudents.filter((student) =>
           student.name.toLowerCase().includes(this.txtSearch.toLowerCase())

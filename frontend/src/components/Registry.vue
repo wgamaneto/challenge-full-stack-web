@@ -1,5 +1,3 @@
-<!-- eslint-disable vuejs-accessibility/label-has-for -->
-
 <template>
   <div class="container">
     <h2 class="header">Cadastrar Aluno</h2>
@@ -42,70 +40,75 @@
       <button type="submit" class="save-button">Salvar</button>
       <button type="button" @click="cancelEdit" class="cancel-button">Cancelar</button>
     </form>
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
   </div>
 </template>
 
 <script>
-import api from '@/services/api'
+import api from "@/services/api";
 
 export default {
-  name: 'Registry',
-  data () {
+  name: "Registry",
+  data() {
     return {
       student: {
-        ra: '',
-        name: '',
-        cpf: '',
-        email: ''
+        ra: "",
+        name: "",
+        cpf: "",
+        email: "",
       },
-      errorMessage: ''
-    }
+      validationMessage: "",
+    };
   },
-  mounted () {
-    const { student } = this.$route.params
+  mounted() {
+    const { student } = this.$route.params;
     if (student) {
-      this.student = student
+      this.student = student;
     }
   },
   methods: {
-    validateRA (ra) {
-      return /^\d{6}$/.test(ra)
+    validateRA(ra) {
+      return /^\d{6}$/.test(ra);
     },
-    validateCPF (cpf) {
-      return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf)
+    validateCPF(cpf) {
+      return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf);
     },
-    saveStudent () {
+
+    saveStudent() {
       if (!this.student.name || !this.student.email || !this.student.ra || !this.student.cpf) {
-        this.errorMessage = 'Por favor, preencha todos os campos.'
-        return
+        this.validationMessage = "Por favor, preencha todos os campos.";
+        return;
       }
       if (!this.validateRA(this.student.ra)) {
-        this.errorMessage = 'O Registro Acadêmico deve conter exatamente 6 números.'
-        return
+        this.validationMessage = "O Registro Acadêmico deve conter exatamente 6 números.";
+        return;
       }
 
       if (!this.validateCPF(this.student.cpf)) {
-        this.errorMessage = 'O CPF deve estar no formato 000.000.000-00.'
-        return
+        this.validationMessage = "O CPF deve estar no formato 000.000.000-00.";
+        return;
       }
 
-      this.errorMessage = ''
+      this.validationMessage = "";
 
       api
-        .post('/students', this.student)
-        .then(() => {
-          this.$router.push('/')
+        .post("/students", this.student)
+        .then(async () => {
+          this.validationMessage = "Aluno cadastrado com sucesso";
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          this.$router.push("/");
         })
         .catch((error) => {
-          console.error('Erro ao cadastrar aluno:', error)
-        })
+          console.error("Erro ao cadastrar aluno:", error);
+          this.validationMessage = "Erro ao cadastrar aluno. Tente novamente.";
+        });
     },
-    cancelEdit () {
-      this.$router.push('/')
-    }
-  }
-}
+
+    cancelEdit() {
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -176,7 +179,7 @@ input {
   opacity: 0.6;
 }
 
-.error-message {
+.validationMessage {
   color: red;
   margin-top: 10px;
   text-align: center;

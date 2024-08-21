@@ -40,7 +40,7 @@
       <button type="submit" class="save-button">Salvar</button>
       <button type="button" @click="cancelEdit" class="cancel-button">Cancelar</button>
     </form>
-    <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
         cpf: "",
         email: "",
       },
-      validationMessage: "",
+      errorMessage: "",
     };
   },
   mounted() {
@@ -73,37 +73,40 @@ export default {
     validateCPF(cpf) {
       return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf);
     },
-
     saveStudent() {
       if (!this.student.name || !this.student.email || !this.student.ra || !this.student.cpf) {
-        this.validationMessage = "Por favor, preencha todos os campos.";
+        this.errorMessage = "Por favor, preencha todos os campos.";
         return;
       }
       if (!this.validateRA(this.student.ra)) {
-        this.validationMessage = "O Registro Acadêmico deve conter exatamente 6 números.";
+        this.errorMessage = "O Registro Acadêmico deve conter exatamente 6 números.";
         return;
       }
 
       if (!this.validateCPF(this.student.cpf)) {
-        this.validationMessage = "O CPF deve estar no formato 000.000.000-00.";
+        this.errorMessage = "O CPF deve estar no formato 000.000.000-00.";
         return;
       }
 
-      this.validationMessage = "";
+      this.errorMessage = "";
 
       api
         .post("/students", this.student)
-        .then(async () => {
-          this.validationMessage = "Aluno cadastrado com sucesso";
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-          this.$router.push("/");
+        .then(() => {
+          this.errorMessage = "Aluno cadastrado com sucesso!";
+          setTimeout(() => {
+            this.$router.push("/");
+          }, 2000);
         })
         .catch((error) => {
+          if (error.response && error.response.status === 400 && error.response.data.message) {
+            this.errorMessage = "Dados já existentes no sistema";
+          } else {
+            this.errorMessage = "Erro ao cadastrar aluno. Tente novamente.";
+          }
           console.error("Erro ao cadastrar aluno:", error);
-          this.validationMessage = "Erro ao cadastrar aluno. Tente novamente.";
         });
     },
-
     cancelEdit() {
       this.$router.push("/");
     },
@@ -179,7 +182,7 @@ input {
   opacity: 0.6;
 }
 
-.validationMessage {
+.error-message {
   color: red;
   margin-top: 10px;
   text-align: center;

@@ -16,7 +16,7 @@
 
 - Dificuldades de instalações de dependencias:
   - Vuetify: tentei tanto pelo CLI quanto manualmente.
-  - @vue_tests3.0: pesquisei sobre os erros, porem nao obtive respostas que me ajudassem a implementar os testes.
+  - @vue_tests3.0: pesquisei sobre os erros, porem nao obtive respostas que me ajudassem a implementar os testes. Alem desse, diversos outros erros de compatibilidade.
 - Usaria o Vue de forma mais eficiente, porém fazem quase 2 anos que tive contato com a tecnologia.
 - Melhorias nas lógicas, códigos mais concisos e maior componentização para evitar repetições desnecessárias, pricipalmente nos botoes e estilos.
 - Melhorias no UX/UI.
@@ -24,7 +24,7 @@
 
 # Quais requisitos obrigatórios que não foram entregues
 
-- Vuetify.
+- Uso do Vuetify.
 
 ```
 ? Choose a preset: Vuetify 2 - Vue CLI (recommended)

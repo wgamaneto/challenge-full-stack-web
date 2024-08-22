@@ -4,8 +4,11 @@
       <div class="logo">
         <img :src="require('@/assets/logo.png')" alt="Grupo A" class="logo-image" />
       </div>
+      <div class="sidebar-title">
+        <h2>Modulo academico</h2>
+      </div>
       <nav class="nav-links">
-        <router-link to="/" class="nav-link">Alunos</router-link>
+        <router-link to="/" class="nav-link" active-class="active-link">Alunos</router-link>
       </nav>
     </aside>
     <main class="main-content">
@@ -27,7 +30,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
+  padding: 15px 0;
+  border: 2px solid black;
 }
 
 .logo {
@@ -36,6 +40,15 @@
 
 .logo-image {
   max-height: 40px;
+}
+
+.sidebar-title {
+  background-color: #a9a9a9;
+  color: white;
+  width: 100%;
+  display: flex;
+  border: 2px solid black;
+  justify-content: center;
 }
 
 .nav-links {
@@ -54,11 +67,28 @@
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .nav-link:hover {
   background-color: #c0c0c0;
   color: #000;
+}
+
+.active-link {
+  background-color: #ddd;
+  border: 1px solid;
+}
+
+.active-link::after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid black;
 }
 
 .main-content {

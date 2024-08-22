@@ -27,9 +27,9 @@
             <td class="td-bottom">{{ student.name }}</td>
             <td class="td-bottom">{{ student.cpf }}</td>
             <td class="td-bottom">
-              <button type="button" class="edit" @click="editStudent(student)">Editar</button>
+              <button type="button" class="edit" @click="editStudent(student)">[Editar]</button>
               <button type="button" @click="openConfirmationModal(student)" class="delete">
-                Excluir
+                [Excluir]
               </button>
             </td>
           </tr>

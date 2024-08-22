@@ -4,14 +4,14 @@
 
 ```
 - npm install
-- npm run serve
+- npm run serve (usando para desenvolver http://localhost:8084/)
 ```
 
 ## cd backend
 
 ```
 - npm install
-- npm start (preferencial port:3001)
+- npm start (usando para desenvolver port:3001)
 ```
 
 # Backend(config)
